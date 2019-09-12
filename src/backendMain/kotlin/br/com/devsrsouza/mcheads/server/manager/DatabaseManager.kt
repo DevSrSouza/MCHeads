@@ -38,9 +38,22 @@ class DatabaseManager {
         }.await()
     }
 
+    suspend fun findHeadById(id: Int): Head? {
+        return suspendedTransactionAsync(db = database) {
+            HeadDAO.findById(id)?.asHead()
+        }.await()
+    }
+
     suspend fun findHeadImage(head: Head): HeadImage? {
         return suspendedTransactionAsync(db = database) {
             HeadImageDAO.findByHead(head)
+        }.await()
+    }
+
+    // null if head doesn't exist
+    suspend fun registerHeadImage(head: Head, image: ByteArray): HeadImage? {
+        return suspendedTransactionAsync(db = database) {
+            HeadImageDAO.newHead(image, head)
         }.await()
     }
 }

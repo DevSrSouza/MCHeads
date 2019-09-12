@@ -1,7 +1,9 @@
 package br.com.devsrsouza.mcheads.server
 
 import br.com.devsrsouza.mcheads.server.manager.DatabaseManager
+import br.com.devsrsouza.mcheads.server.manager.ImageManager
 import br.com.devsrsouza.mcheads.server.route.category
+import br.com.devsrsouza.mcheads.server.route.image
 import br.com.devsrsouza.mcheads.server.route.search
 import io.ktor.application.install
 import io.ktor.features.ContentNegotiation
@@ -19,10 +21,12 @@ fun main() {
         }
 
         val databaseManager = DatabaseManager()
+        val imageManager = ImageManager(databaseManager)
 
         routing {
             search(databaseManager)
             category(databaseManager)
+            image(imageManager, databaseManager)
         }
     }.start(wait = true)
 }

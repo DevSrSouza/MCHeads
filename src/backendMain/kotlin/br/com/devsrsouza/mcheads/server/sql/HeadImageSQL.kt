@@ -31,18 +31,18 @@ class HeadImageDAO(id: EntityID<Int>) : IntEntity(id) {
                 ?.asHeadImage()
         }
 
-        fun newHead(image: ByteArray, head: Head): Boolean {
+        // null if head doesn't exist
+        fun newHead(image: ByteArray, head: Head): HeadImage? {
             return HeadDAO.findById(head.id)?.let {
                 newHead(image, it)
-                true
-            } ?: false
+            }
         }
 
-        fun newHead(image: ByteArray, head: HeadDAO) {
-            new {
+        fun newHead(image: ByteArray, head: HeadDAO): HeadImage {
+            return new {
                 this.image = SerialBlob(image)
                 this.head = head
-            }
+            }.asHeadImage()
         }
     }
 
