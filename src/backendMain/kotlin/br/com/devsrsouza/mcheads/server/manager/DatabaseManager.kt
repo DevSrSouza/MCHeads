@@ -2,8 +2,7 @@ package br.com.devsrsouza.mcheads.server.manager
 
 import br.com.devsrsouza.mcheads.common.Head
 import br.com.devsrsouza.mcheads.common.HeadCategory
-import br.com.devsrsouza.mcheads.server.sql.HeadDAO
-import br.com.devsrsouza.mcheads.server.sql.HeadTable
+import br.com.devsrsouza.mcheads.server.sql.*
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.jetbrains.exposed.sql.Database
@@ -23,7 +22,7 @@ class DatabaseManager {
         database = Database.connect(dataSource)
 
         transaction(database) {
-            SchemaUtils.create(HeadTable)
+            SchemaUtils.create(HeadTable, HeadImageTable)
         }
     }
 
@@ -36,6 +35,12 @@ class DatabaseManager {
     suspend fun allHeadsFromCategory(category: HeadCategory): List<Head> {
         return suspendedTransactionAsync(db = database) {
             HeadDAO.findByCategory(category).map { it.asHead() }
+        }.await()
+    }
+
+    suspend fun findHeadImage(head: Head): HeadImage? {
+        return suspendedTransactionAsync(db = database) {
+            HeadImageDAO.findByHead(head)
         }.await()
     }
 }

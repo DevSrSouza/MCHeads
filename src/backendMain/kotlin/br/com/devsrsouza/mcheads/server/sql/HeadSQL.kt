@@ -24,10 +24,10 @@ class HeadDAO(id: EntityID<Int>) : IntEntity(id) {
         }
     }
 
-    var name by HeadTable.name
-    var uuid by HeadTable.uuid
-    var skinUrl by HeadTable.mojangId
-    var category by HeadTable.category
+    private var name by HeadTable.name
+    private var uuid by HeadTable.uuid
+    private var skinUrl by HeadTable.mojangId
+    private var category by HeadTable.category
 
     fun asHead() = Head(id.value, name, uuid.toString(), skinUrl, category)
 }
