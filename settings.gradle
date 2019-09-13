@@ -1,2 +1,3 @@
 rootProject.name = 'MC-Heads'
+include("backend", "client", "shared")
 

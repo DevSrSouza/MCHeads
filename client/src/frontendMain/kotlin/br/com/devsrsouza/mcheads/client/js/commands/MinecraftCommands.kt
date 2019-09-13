@@ -1,4 +1,4 @@
-package br.com.devsrsouza.mcheads.js.commands
+package br.com.devsrsouza.mcheads.client.js.commands
 
 import br.com.devsrsouza.mcheads.common.Head
 import br.com.devsrsouza.mcheads.common.MOJANG_TEXTURE_API

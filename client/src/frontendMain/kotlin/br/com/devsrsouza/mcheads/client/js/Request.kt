@@ -1,4 +1,4 @@
-package br.com.devsrsouza.mcheads.js
+package br.com.devsrsouza.mcheads.client.js
 
 import br.com.devsrsouza.mcheads.common.Head
 import br.com.devsrsouza.mcheads.common.HeadCategory
