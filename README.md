@@ -10,9 +10,10 @@ A Kotlin multiplatform project that provide minecraft custom heads database for 
 Provide the REST API for the clients
 
 ### Client
-Provide a platform and library specific REST API implementation
+Provide a platform and library specific implementation of the backend REST API
 
 - Common
+- Ktor (Multiplatform)
 - Frontend (KotlinJS)
 - Retrofit
 

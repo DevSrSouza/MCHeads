@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.plugin.KotlinDependencyHandler
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinMetadataTarget
 
 buildscript {
     repositories {
@@ -43,20 +44,27 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        val `frontendMain` by getting {
+        val ktorMain by creating {
+            dependsOn(commonMain)
+            dependencies {
+                applyShared()
+                implementation("io.ktor:ktor-client-core:$ktor_version")
+            }
+        }
+        val frontendMain by getting {
             dependencies {
                 applyShared()
                 implementation(kotlin("stdlib-js"))
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:$serialization_version")
             }
         }
-        val `frontendTest` by getting {
+        val frontendTest by getting {
             dependencies {
                 applyShared()
                 implementation(kotlin("test-js"))
             }
         }
-        val `retrofitMain` by getting {
+        val retrofitMain by getting {
             dependencies {
                 applyShared()
                 implementation(kotlin("stdlib"))
