@@ -2,13 +2,14 @@ package br.com.devsrsouza.mcheads.server.manager
 
 import br.com.devsrsouza.mcheads.common.Head
 import br.com.devsrsouza.mcheads.common.HeadCategory
-import br.com.devsrsouza.mcheads.server.sql.*
+import br.com.devsrsouza.mcheads.server.database.exposed.*
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.experimental.suspendedTransactionAsync
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.util.*
 
 class DatabaseManager {
 
@@ -54,6 +55,24 @@ class DatabaseManager {
     suspend fun registerHeadImage(head: Head, image: ByteArray): HeadImage? {
         return suspendedTransactionAsync(db = database) {
             HeadImageDAO.newHead(image, head)
+        }.await()
+    }
+
+    suspend fun registerHead(
+        name: String,
+        uuid: UUID,
+        mojangId: String,
+        category: HeadCategory,
+        populatorName: String
+    ): Head? {
+        return suspendedTransactionAsync(db = database) {
+            HeadDAO.newHead(
+                name,
+                uuid,
+                mojangId,
+                category,
+                populatorName
+            )?.asHead()
         }.await()
     }
 }

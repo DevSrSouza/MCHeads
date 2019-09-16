@@ -1,4 +1,4 @@
-package br.com.devsrsouza.mcheads.server.sql
+package br.com.devsrsouza.mcheads.server.database.exposed
 
 import br.com.devsrsouza.mcheads.common.Head
 import org.jetbrains.exposed.dao.EntityID
@@ -49,5 +49,9 @@ class HeadImageDAO(id: EntityID<Int>) : IntEntity(id) {
     private var image by HeadImageTable.image
     private var head by HeadDAO referencedOn HeadImageTable.head_id
 
-    fun asHeadImage() = HeadImage(id.value, image.binaryStream.readBytes(), head.asHead())
+    fun asHeadImage() = HeadImage(
+        id.value,
+        image.binaryStream.readBytes(),
+        head.asHead()
+    )
 }

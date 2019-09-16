@@ -2,7 +2,7 @@ package br.com.devsrsouza.mcheads.server.manager
 
 import br.com.devsrsouza.mcheads.common.Head
 import br.com.devsrsouza.mcheads.server.api.VisageAPI
-import br.com.devsrsouza.mcheads.server.sql.HeadImage
+import br.com.devsrsouza.mcheads.server.database.exposed.HeadImage
 
 class ImageManager(
     private val databaseManager: DatabaseManager
