@@ -10,6 +10,7 @@ buildscript {
 plugins {
     id("org.jetbrains.kotlin.multiplatform") version "1.3.50"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.3.50"
+    id("maven-publish")
 }
 repositories {
     maven { url = uri("https://dl.bintray.com/kotlin/ktor") }
@@ -20,10 +21,22 @@ val kotlinx_serialization_converter = "0.4.0"
 val serialization_version = "0.12.0"
 
 kotlin {
+    metadata {
+        mavenPublication {
+            artifactId = "client-common"
+        }
+    }
     js("frontend") {
         browser {}
+        mavenPublication {
+            artifactId = "client-frontend"
+        }
     }
-    jvm("retrofit")
+    jvm("retrofit") {
+        mavenPublication {
+            artifactId = "client-retrofit"
+        }
+    }
 
     sourceSets {
         fun KotlinDependencyHandler.applyShared() {
