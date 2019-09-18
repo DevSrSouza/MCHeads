@@ -22,20 +22,6 @@ interface HeadApiService : IHeadApiService {
     override suspend fun searchCategory(
         @Path("category") category: HeadCategory
     ): List<Head>
-
-    @GET("image/{head_id}")
-    suspend fun getRenderResponse(
-        @Path("{head_id}") headId: Int
-    ): ResponseBody
-
-    override suspend fun getRender(
-        headId: Int
-    ): ByteArray? {
-        val response = getRenderResponse(headId)
-        return if(response.contentType() == MediaType.get("image/png")) {
-            response.bytes()
-        } else null
-    }
 }
 
 actual object HeadApi {

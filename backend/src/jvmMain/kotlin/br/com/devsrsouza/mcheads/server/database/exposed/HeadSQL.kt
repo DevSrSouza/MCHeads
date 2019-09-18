@@ -2,6 +2,7 @@ package br.com.devsrsouza.mcheads.server.database.exposed
 
 import br.com.devsrsouza.mcheads.common.Head
 import br.com.devsrsouza.mcheads.common.HeadCategory
+import br.com.devsrsouza.mcheads.server.WEBSITE_DOMAIN
 import org.jetbrains.exposed.dao.*
 import org.jetbrains.exposed.sql.SizedIterable
 import org.jetbrains.exposed.sql.lowerCase
@@ -60,5 +61,8 @@ class HeadDAO(id: EntityID<Int>) : IntEntity(id) {
     private var populated by HeadTable.populated
     private var registerTime by HeadTable.registerTime
 
-    fun asHead() = Head(id.value, name, uuid.toString(), mojangId, category)
+    fun asHead() = Head(
+        id.value, name, uuid.toString(),
+        mojangId, category, "$WEBSITE_DOMAIN/image/${id.value}"
+    )
 }

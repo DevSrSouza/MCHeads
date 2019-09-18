@@ -6,9 +6,6 @@ import io.ktor.client.HttpClient
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.request.get
-import io.ktor.client.response.HttpResponse
-import io.ktor.http.HttpStatusCode
-import io.ktor.util.toByteArray
 
 class KtorHeadApi(private val http: HttpClient) : IHeadApiService {
 
@@ -22,19 +19,6 @@ class KtorHeadApi(private val http: HttpClient) : IHeadApiService {
         category: HeadCategory
     ): List<Head> {
         return http.get("${API_URL}/category/${category.name.toLowerCase()}")
-    }
-
-    override suspend fun getRender(
-        headId: Int
-    ): ByteArray? {
-        try {
-            val response = http.get<HttpResponse>("${API_URL}/image/${headId}")
-            if(response.status == HttpStatusCode.OK) {
-                return response.content.toByteArray()
-            } else return null
-        } catch (e: Throwable) {
-            return null
-        }
     }
 }
 

@@ -8,5 +8,6 @@ data class Head(
     val name: String,
     val uuid: String,
     val mojangId: String,
-    val category: HeadCategory
+    val category: HeadCategory,
+    val imageUrl: String
 )

@@ -21,12 +21,6 @@ class FrontEndHeadApi : IHeadApiService {
         return parseHeads(response)
     }
 
-    override suspend fun getRender(headId: Int): ByteArray? {
-        return try {
-            httpGet<ByteArray>("${API_URL}/image/$headId", "image/png")
-        } catch (e: Throwable) { null }
-    }
-
     private fun parseHeads(json: String): List<Head> {
         return Json.parse(Head.serializer().list, json)
     }

@@ -9,9 +9,6 @@ interface IHeadApiService {
     suspend fun search(name: String): List<Head>
 
     suspend fun searchCategory(category: HeadCategory): List<Head>
-
-    // Returns a PNG in a ByteArray or null if the head doesn't exist
-    suspend fun getRender(headId: Int): ByteArray?
 }
 
 expect object HeadApi {
