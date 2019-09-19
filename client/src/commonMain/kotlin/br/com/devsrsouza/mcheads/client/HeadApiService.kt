@@ -3,8 +3,6 @@ package br.com.devsrsouza.mcheads.client
 import br.com.devsrsouza.mcheads.common.Head
 import br.com.devsrsouza.mcheads.common.HeadCategory
 
-const val API_URL = "http://API-DAS-HEADS.com.br"
-
 interface IHeadApiService {
     suspend fun search(name: String): List<Head>
 

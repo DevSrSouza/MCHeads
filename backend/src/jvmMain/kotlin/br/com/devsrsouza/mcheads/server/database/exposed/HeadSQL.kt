@@ -1,5 +1,6 @@
 package br.com.devsrsouza.mcheads.server.database.exposed
 
+import br.com.devsrsouza.mcheads.common.API_URL
 import br.com.devsrsouza.mcheads.common.Head
 import br.com.devsrsouza.mcheads.common.HeadCategory
 import br.com.devsrsouza.mcheads.server.WEBSITE_DOMAIN
@@ -63,6 +64,6 @@ class HeadDAO(id: EntityID<Int>) : IntEntity(id) {
 
     fun asHead() = Head(
         id.value, name, uuid.toString(),
-        mojangId, category, "$WEBSITE_DOMAIN/image/${id.value}"
+        mojangId, category, "$API_URL/image/${id.value}"
     )
 }

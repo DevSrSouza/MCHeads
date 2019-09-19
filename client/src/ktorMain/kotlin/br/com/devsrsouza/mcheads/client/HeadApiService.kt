@@ -1,5 +1,6 @@
 package br.com.devsrsouza.mcheads.client
 
+import br.com.devsrsouza.mcheads.common.API_URL
 import br.com.devsrsouza.mcheads.common.Head
 import br.com.devsrsouza.mcheads.common.HeadCategory
 import io.ktor.client.HttpClient
