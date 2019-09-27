@@ -6,25 +6,26 @@ import br.com.devsrsouza.mcheads.common.HeadCategory
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
-import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import retrofit2.create
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface HeadApiService : IHeadApiService {
 
-    @GET("search/{name}")
+    @GET("search/{search}")
     override suspend fun search(
-        @Path("name") name: String
+        @Path("search") search: String
     ): List<Head>
 
-    @GET("category/{category}")
-    override suspend fun searchCategory(
-        @Path("category") category: HeadCategory
+    @GET("heads")
+    override suspend fun get(
+        @Query("category") category: HeadCategory?,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
     ): List<Head>
 }
-
 actual object HeadApi {
 
     private val contentType = MediaType.get("application/json")

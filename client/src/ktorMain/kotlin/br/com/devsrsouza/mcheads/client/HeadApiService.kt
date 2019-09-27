@@ -11,15 +11,20 @@ import io.ktor.client.request.get
 class KtorHeadApi(private val http: HttpClient) : IHeadApiService {
 
     override suspend fun search(
-        name: String
+        search: String
     ): List<Head> {
-        return http.get("${API_URL}/search/${name}")
+        return http.get("${API_URL}/search/${search}")
     }
 
-    override suspend fun searchCategory(
-        category: HeadCategory
+    override suspend fun get(
+        category: HeadCategory?,
+        page: Int,
+        limit: Int
     ): List<Head> {
-        return http.get("${API_URL}/category/${category.name.toLowerCase()}")
+
+        return http.get(
+            "${API_URL}/heads?page=$page&limit=$limit${if(category != null) "&category=${category.name}" else ""}"
+        )
     }
 }
 

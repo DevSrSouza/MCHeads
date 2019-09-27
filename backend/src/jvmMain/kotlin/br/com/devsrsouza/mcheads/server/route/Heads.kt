@@ -10,13 +10,14 @@ import io.ktor.routing.Route
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-@Location("/category/{category}")
-class category(val category: HeadCategory)
+@Location("/heads")
+class heads(val category: HeadCategory? = null, val page: Int = 1, val limit: Int = -1)
+// /heads?category=alphabet&page=1&limit=10
 
 fun Route.category(manager: DatabaseManager) {
-    get<category> {
+    get<heads> {
         withContext(Dispatchers.IO) {
-            call.respond(manager.allHeadsFromCategory(it.category))
+            call.respond(manager.allHeads(it.category, it.page, it.limit))
         }
     }
 }

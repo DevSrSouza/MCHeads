@@ -33,9 +33,21 @@ class DatabaseManager {
         }.await()
     }
 
-    suspend fun allHeadsFromCategory(category: HeadCategory): List<Head> {
+    /**
+     * Null [category] if is all categories
+     * -1 [limit] if doesn't have one of heads
+     */
+    suspend fun allHeads(
+        category: HeadCategory?,
+        page: Int,
+        limit: Int
+    ): List<Head> {
+        if(page < 1) throw IllegalArgumentException("page can't be lower than one.")
+
         return suspendedTransactionAsync(db = database) {
-            HeadDAO.findByCategory(category).map { it.asHead() }
+            (if (category != null) {
+                HeadDAO.findByCategory(category, page, limit)
+            } else HeadDAO.all(page, limit)).map { it.asHead() }
         }.await()
     }
 

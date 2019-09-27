@@ -12,13 +12,17 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class FrontEndHeadApi : IHeadApiService {
-    override suspend fun search(name: String): List<Head> {
-        val response = httpGet<String>("${API_URL}/search/$name")
+    override suspend fun search(search: String): List<Head> {
+        val response = httpGet<String>("${API_URL}/search/$search")
         return parseHeads(response)
     }
 
-    override suspend fun searchCategory(category: HeadCategory): List<Head> {
-        val response = httpGet<String>("${API_URL}/category/${category.name.toLowerCase()}")
+    override suspend fun get(
+        category: HeadCategory?,
+        page: Int,
+        limit: Int
+    ): List<Head> {
+        val response = httpGet<String>("${API_URL}/heads?page=$page&limit=$limit${if(category != null) "&category=${category.name}" else ""}")
         return parseHeads(response)
     }
 

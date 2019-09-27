@@ -62,6 +62,8 @@ kotlin {
             dependencies {
                 applyShared()
                 implementation("io.ktor:ktor-client-core:$ktor_version")
+                implementation("io.ktor:ktor-client-json:$ktor_version")
+                implementation("io.ktor:ktor-client-serialization:$ktor_version")
             }
         }
         val frontendMain by getting {

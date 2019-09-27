@@ -3,11 +3,11 @@ package br.com.devsrsouza.mcheads.server.database.exposed
 import br.com.devsrsouza.mcheads.common.API_URL
 import br.com.devsrsouza.mcheads.common.Head
 import br.com.devsrsouza.mcheads.common.HeadCategory
-import br.com.devsrsouza.mcheads.server.WEBSITE_DOMAIN
 import org.jetbrains.exposed.dao.*
 import org.jetbrains.exposed.sql.SizedIterable
 import org.jetbrains.exposed.sql.lowerCase
 import org.joda.time.DateTime
+import java.lang.IllegalArgumentException
 import java.util.*
 
 object HeadTable : IntIdTable() {
@@ -25,8 +25,28 @@ class HeadDAO(id: EntityID<Int>) : IntEntity(id) {
             return find { HeadTable.name.lowerCase() regexp  ".*${str.toLowerCase()}.*"}
         }
 
-        fun findByCategory(category: HeadCategory): SizedIterable<HeadDAO> {
-            return find { HeadTable.category eq category }
+        private fun SizedIterable<HeadDAO>.limitByPage(
+            page: Int,
+            limit: Int
+        ): SizedIterable<HeadDAO> {
+            if (page < 1) throw IllegalArgumentException("page can't be lower than one.")
+
+            return if (limit > 0)
+                limit(limit, (page - 1) * limit)
+            else this
+        }
+
+        fun all(
+            page: Int,
+            limit: Int
+        ): SizedIterable<HeadDAO> = all().limitByPage(page, limit)
+
+        fun findByCategory(
+            category: HeadCategory,
+            page: Int = 1,
+            limit: Int = -1
+        ): SizedIterable<HeadDAO> {
+            return find { HeadTable.category eq category }.limitByPage(page, limit)
         }
         
         fun findByMojangId(mojangId: String): HeadDAO? {
